@@ -64,8 +64,7 @@ class _SelectionDialogState extends State<SelectionDialog> {
         child: Container(
           clipBehavior: Clip.hardEdge,
           width: widget.size?.width ?? MediaQuery.of(context).size.width,
-          height:
-              widget.size?.height ?? MediaQuery.of(context).size.height * 0.85,
+          height: widget.size?.height ?? MediaQuery.of(context).size.height * 0.85,
           decoration: widget.boxDecoration ??
               BoxDecoration(
                 color: widget.backgroundColor ?? Colors.white,
@@ -138,33 +137,34 @@ class _SelectionDialogState extends State<SelectionDialog> {
 
   Widget _buildOption(CountryCode e) {
     return Container(
-      width: 400,
-      child: Flex(
-        direction: Axis.horizontal,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          if (widget.showFlag!)
-            Flexible(
-              child: Container(
-                margin: const EdgeInsets.only(right: 16.0),
-                decoration: widget.flagDecoration,
-                clipBehavior:
-                    widget.flagDecoration == null ? Clip.none : Clip.hardEdge,
-                child: Image.asset(
+          Container(
+            margin: const EdgeInsets.only(right: 16.0),
+            decoration: widget.flagDecoration,
+            clipBehavior: widget.flagDecoration == null ? Clip.none : Clip.hardEdge,
+            child: Row(
+              children: [
+                Image.asset(
                   e.flagUri!,
                   package: 'country_code_picker',
                   width: widget.flagWidth,
                 ),
-              ),
+              ],
             ),
+          ),
           Expanded(
-            flex: 4,
             child: Text(
-              widget.showCountryOnly!
-                  ? e.toCountryStringOnly()
-                  : e.toLongString(),
+              e.toCountryStringOnly(),
               overflow: TextOverflow.fade,
               style: widget.textStyle,
             ),
+          ),
+          Text(
+            e.toString(),
+            overflow: TextOverflow.fade,
+            style: widget.textStyle,
           ),
         ],
       ),
@@ -177,8 +177,7 @@ class _SelectionDialogState extends State<SelectionDialog> {
     }
 
     return Center(
-      child: Text(CountryLocalizations.of(context)?.translate('no_country') ??
-          'No country found'),
+      child: Text(CountryLocalizations.of(context)?.translate('no_country') ?? 'No country found'),
     );
   }
 
@@ -192,10 +191,7 @@ class _SelectionDialogState extends State<SelectionDialog> {
     s = s.toUpperCase();
     setState(() {
       filteredElements = widget.elements
-          .where((e) =>
-              e.code!.contains(s) ||
-              e.dialCode!.contains(s) ||
-              e.name!.toUpperCase().contains(s))
+          .where((e) => e.code!.contains(s) || e.dialCode!.contains(s) || e.name!.toUpperCase().contains(s))
           .toList();
     });
   }
