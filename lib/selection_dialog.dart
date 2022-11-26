@@ -141,7 +141,7 @@ class _SelectionDialogState extends State<SelectionDialog> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Container(
-            margin: const EdgeInsets.only(right: 16.0),
+            margin: EdgeInsetsDirectional.only(end: 16.0),
             decoration: widget.flagDecoration,
             clipBehavior: widget.flagDecoration == null ? Clip.none : Clip.hardEdge,
             child: Row(
